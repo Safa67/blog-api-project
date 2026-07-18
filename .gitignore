@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Docker ve Loglar
+*.log
+blog_db_data/
+
+
