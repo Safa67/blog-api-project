@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BlogServiceImpl implements IBlogPostService {
+public class BlogPostServiceImpl implements IBlogPostService {
     private final BlogPostRepository blogPostRepository;
     private final BlogPostMapper blogPostMapper;
     private final CategoryRepository categoryRepository;
