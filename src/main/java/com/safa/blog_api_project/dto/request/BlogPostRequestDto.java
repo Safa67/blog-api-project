@@ -1,0 +1,19 @@
+package com.safa.blog_api_project.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class BlogPostRequestDto {
+    @NotBlank
+    private String title;
+
+    @NotBlank
+    private String content;
+
+    @NotNull
+    private Long categoryId;
+}
