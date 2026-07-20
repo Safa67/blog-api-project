@@ -4,6 +4,7 @@ import com.safa.blog_api_project.dto.request.BlogPostRequestDto;
 import com.safa.blog_api_project.dto.response.BlogPostResponseDto;
 import com.safa.blog_api_project.entity.BlogPost;
 import com.safa.blog_api_project.entity.Category;
+import com.safa.blog_api_project.exception.ResourceNotFoundException;
 import com.safa.blog_api_project.mapper.BlogPostMapper;
 import com.safa.blog_api_project.repository.BlogPostRepository;
 import com.safa.blog_api_project.repository.CategoryRepository;
@@ -25,7 +26,7 @@ public class BlogPostServiceImpl implements IBlogPostService {
     public BlogPostResponseDto createBlogPost(BlogPostRequestDto blogPostRequestDto) {
         Long id = blogPostRequestDto.getCategoryId();
         Category category = categoryRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("kategori bulunamadi"));
+                .orElseThrow(()->new ResourceNotFoundException("kategori bulunamadi"));
         BlogPost blogPost = blogPostMapper.toBlogEntity(blogPostRequestDto);
         blogPost.setCategory(category);
         BlogPost dbBlogPost= blogPostRepository.save(blogPost);
@@ -36,7 +37,7 @@ public class BlogPostServiceImpl implements IBlogPostService {
     @Override
     public BlogPostResponseDto getBlogPostById(Long id) {
         BlogPost blogPost = blogPostRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Getirilecek BlogPost bulunamadi"));
+                .orElseThrow(()->new ResourceNotFoundException("Getirilecek BlogPost bulunamadi"));
         BlogPostResponseDto blogPostResponseDto =blogPostMapper.toBlogResponse(blogPost);
 
         return blogPostResponseDto;
@@ -53,7 +54,7 @@ public class BlogPostServiceImpl implements IBlogPostService {
     @Override
     public void deleteBlogPostByID(Long id) {
         BlogPost blogPost =blogPostRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Silinecek BlogPost bulunamadi"));
+                .orElseThrow(()->new ResourceNotFoundException("Silinecek BlogPost bulunamadi"));
         blogPostRepository.delete(blogPost);
     }
 }

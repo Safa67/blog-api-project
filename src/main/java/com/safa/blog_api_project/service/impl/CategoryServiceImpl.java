@@ -3,6 +3,7 @@ package com.safa.blog_api_project.service.impl;
 import com.safa.blog_api_project.dto.request.CategoryRequestDto;
 import com.safa.blog_api_project.dto.response.CategoryResponseDto;
 import com.safa.blog_api_project.entity.Category;
+import com.safa.blog_api_project.exception.ResourceNotFoundException;
 import com.safa.blog_api_project.mapper.CategoryMapper;
 import com.safa.blog_api_project.repository.CategoryRepository;
 import com.safa.blog_api_project.service.ICategoryService;
@@ -28,7 +29,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CategoryResponseDto getCategoryById(Long id) {
         Category category =categoryRepository.findById(id).
-                orElseThrow(()-> new RuntimeException("Kategori Bulunamadı"));
+                orElseThrow(()-> new ResourceNotFoundException("Kategori Bulunamadı"));
         CategoryResponseDto categoryResponseDto = categoryMapper.toCategoryResponse(category);
         return categoryResponseDto;
     }
@@ -43,7 +44,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public void deleteCategoryById(Long id) {
         Category category =categoryRepository.findById(id).
-                orElseThrow(()-> new RuntimeException("Kategori Bulunamadı"));
+                orElseThrow(()-> new ResourceNotFoundException("Kategori Bulunamadı"));
         categoryRepository.delete(category);
     }
 }
