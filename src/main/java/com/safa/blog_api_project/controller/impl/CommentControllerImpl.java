@@ -40,4 +40,10 @@ public class CommentControllerImpl implements ICommentController {
     public void deleteCommentById(@PathVariable Long id) {
         commentService.deleteCommentById(id);
     }
+
+    @PutMapping("/{id}")
+    @Override
+    public CommentResponseDto updateComment(@PathVariable Long id,@Valid @RequestBody CommentRequestDto commentRequestDto) {
+        return commentService.updateComment(id,commentRequestDto);
+    }
 }

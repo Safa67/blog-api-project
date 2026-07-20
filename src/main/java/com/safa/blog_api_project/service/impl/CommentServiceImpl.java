@@ -42,7 +42,7 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public CommentResponseDto getCommentById(Long id) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("yorum bulunamadi"));
+                .orElseThrow(()-> new ResourceNotFoundException("Yorum Bulunamadi"));
         return commentMapper.toCommentResponse(comment);
     }
 
@@ -51,5 +51,22 @@ public class CommentServiceImpl implements ICommentService {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Silinecek Yorum Bulunamadi"));
         commentRepository.delete(comment);
+    }
+
+    @Override
+    public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Guncellenecek Yorum Bulunamadi"));
+
+        comment.setCommenterName(commentRequestDto.getCommenterName());
+        comment.setContent(commentRequestDto.getContent());
+
+        BlogPost blogPost = blogPostRepository.findById(commentRequestDto.getBlogId())
+                .orElseThrow(()->new ResourceNotFoundException("Post Bulunamadi"));
+
+        comment.setBlogPost(blogPost);
+
+        Comment dbcomment = commentRepository.save(comment);
+        return commentMapper.toCommentResponse(dbcomment);
     }
 }

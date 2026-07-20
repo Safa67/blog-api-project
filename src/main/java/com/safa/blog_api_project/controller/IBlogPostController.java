@@ -16,4 +16,6 @@ public interface IBlogPostController {
 
     public void  deleteBlogPostByID(Long id);
 
+    public BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto);
+
 }

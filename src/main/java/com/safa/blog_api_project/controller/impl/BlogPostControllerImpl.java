@@ -40,4 +40,10 @@ public class BlogPostControllerImpl implements IBlogPostController {
     public void deleteBlogPostByID(@PathVariable Long id) {
         blogPostService.deleteBlogPostByID(id);
     }
+
+    @PutMapping("/{id}")
+    @Override
+    public BlogPostResponseDto updateBlogPost(@PathVariable Long id,@Valid @RequestBody BlogPostRequestDto blogPostRequestDto) {
+        return blogPostService.updateBlogPost(id,blogPostRequestDto);
+    }
 }

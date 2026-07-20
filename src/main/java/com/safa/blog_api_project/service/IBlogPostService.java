@@ -13,4 +13,6 @@ public interface IBlogPostService {
     public List<BlogPostResponseDto> getAllBlogPost();
 
     public void  deleteBlogPostByID(Long id);
+
+    public BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto);
 }

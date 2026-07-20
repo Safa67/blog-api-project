@@ -14,4 +14,6 @@ public interface ICommentController {
     public CommentResponseDto getCommentById(Long id);
 
     public void deleteCommentById(Long id);
+
+    public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto);
 }

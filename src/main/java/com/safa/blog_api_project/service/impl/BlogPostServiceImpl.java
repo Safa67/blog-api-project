@@ -14,6 +14,7 @@ import com.safa.blog_api_project.service.IBlogPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,5 +66,30 @@ public class BlogPostServiceImpl implements IBlogPostService {
         BlogPost blogPost =blogPostRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Silinecek BlogPost bulunamadi"));
         blogPostRepository.delete(blogPost);
+    }
+
+    @Override
+    public BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto) {
+        BlogPost blogPost = blogPostRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Guncellenecek BlogPost bulunamadi"));
+
+        Category category = categoryRepository.findById(blogPostRequestDto.getCategoryId())
+                .orElseThrow(()->new ResourceNotFoundException("Kategori Bulunamadı"));
+        blogPost.setContent(blogPostRequestDto.getContent());
+        blogPost.setTitle(blogPostRequestDto.getTitle());
+        blogPost.setCategory(category);
+
+        if (blogPostRequestDto.getTagIds() != null && !blogPostRequestDto.getTagIds().isEmpty()){
+            List<Tag> tags = tagRepository.findAllById(blogPostRequestDto.getTagIds());
+            blogPost.setTags(tags);
+        }
+        else {
+            blogPost.setTags(new ArrayList<>());
+        }
+
+       BlogPost dbblogPost = blogPostRepository.save(blogPost);
+
+       return blogPostMapper.toBlogResponse(dbblogPost);
+
     }
 }
