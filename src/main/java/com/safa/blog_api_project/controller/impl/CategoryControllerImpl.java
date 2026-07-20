@@ -41,4 +41,10 @@ public class CategoryControllerImpl implements ICategoryController {
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
     }
+
+    @PutMapping("/{id}")
+    @Override
+    public CategoryResponseDto updateCategory(@PathVariable Long id,@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
+        return categoryService.updateCategory(id,categoryRequestDto);
+    }
 }

@@ -45,4 +45,13 @@ public class TagService implements ITagService {
                 .orElseThrow(()->new ResourceNotFoundException("Silinecek Tag Bulunamadı"));
         tagRepository.delete(tag);
     }
+
+    @Override
+    public TagResponseDto updateTag(Long id,TagRequestDto tagRequestDto) {
+        Tag tag =tagRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Güncellenecek Tag Bulunamadı"));
+        tag.setName(tagRequestDto.getName());
+        Tag dbTag = tagRepository.save(tag);
+        return tagMapper.toTagResponse(dbTag);
+    }
 }

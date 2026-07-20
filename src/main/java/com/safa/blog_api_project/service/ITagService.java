@@ -13,4 +13,6 @@ public interface ITagService {
     public List<TagResponseDto> getAllTag();
 
     public void deleteTagById(Long id);
+
+    public TagResponseDto updateTag(Long id,TagRequestDto tagRequestDto);
 }

@@ -47,4 +47,13 @@ public class CategoryServiceImpl implements ICategoryService {
                 orElseThrow(()-> new ResourceNotFoundException("Kategori Bulunamadı"));
         categoryRepository.delete(category);
     }
+
+    @Override
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto requestDto) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Güncellenecek Kategori Bulunamadı"));
+        category.setName(requestDto.getName());
+        Category dbCategory = categoryRepository.save(category);
+        return categoryMapper.toCategoryResponse(dbCategory);
+    }
 }

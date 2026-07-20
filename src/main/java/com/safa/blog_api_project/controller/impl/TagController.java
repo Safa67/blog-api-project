@@ -40,4 +40,10 @@ public class TagController implements ITagController {
     public void deleteTagById(@PathVariable Long id) {
         tagService.deleteTagById(id);
     }
+
+    @PutMapping("/{id}")
+    @Override
+    public TagResponseDto updateTag(@PathVariable Long id,@Valid @RequestBody TagRequestDto tagRequestDto) {
+        return tagService.updateTag(id,tagRequestDto);
+    }
 }
