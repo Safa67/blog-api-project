@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity extends Auditable{
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

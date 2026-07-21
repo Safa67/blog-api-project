@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "category")
-public class Category {
+public class Category extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
