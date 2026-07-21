@@ -9,7 +9,7 @@ public interface ICommentController {
 
     public CommentResponseDto createComment(CommentRequestDto commentRequestDto);
 
-    public List<CommentResponseDto> getAllComment();
+    public List<CommentResponseDto> getAllComment(int page , int size);
 
     public CommentResponseDto getCommentById(Long id);
 

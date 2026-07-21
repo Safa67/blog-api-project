@@ -15,6 +15,10 @@ import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.IBlogPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +69,10 @@ public class BlogPostServiceImpl implements IBlogPostService {
 
 
     @Override
-    public List<BlogPostResponseDto> getAllBlogPost() {
-        List<BlogPost> blogPosts = blogPostRepository.findAll();
-        List<BlogPostResponseDto> blogPostResponseDtos=blogPostMapper.toResponseList(blogPosts);
-        return blogPostResponseDtos;
+    public List<BlogPostResponseDto> getAllBlogPost(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogPost> blogPostsPage = blogPostRepository.findAll(pageable);
+        return blogPostMapper.toResponseList(blogPostsPage.getContent());
     }
 
     @Override

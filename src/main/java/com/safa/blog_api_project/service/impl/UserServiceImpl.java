@@ -8,7 +8,10 @@ import com.safa.blog_api_project.mapper.UserMapper;
 import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -35,10 +38,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<UserResponseDto> findAllUser() {
-        List<User> userList = userRepository.findAll();
-        userMapper.toUserResponseList(userList);
-        return userMapper.toUserResponseList(userList);
+    public List<UserResponseDto> findAllUser(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> userListPage = userRepository.findAll(pageable);
+        return userMapper.toUserResponseList(userListPage.getContent());
     }
 
     @Override

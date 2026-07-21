@@ -33,8 +33,9 @@ public class UserControllerImpl implements IUserController {
 
     @GetMapping
     @Override
-    public List<UserResponseDto> findAllUser() {
-        return userService.findAllUser();
+    public List<UserResponseDto> findAllUser(@RequestParam(defaultValue = "0") int page ,
+                                             @RequestParam(defaultValue = "10") int size) {
+        return userService.findAllUser(page,size);
     }
 
     @PutMapping("/{id}")
