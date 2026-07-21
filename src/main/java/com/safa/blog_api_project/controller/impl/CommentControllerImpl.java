@@ -25,8 +25,9 @@ public class CommentControllerImpl implements ICommentController {
 
     @GetMapping
     @Override
-    public List<CommentResponseDto> getAllComment() {
-        return commentService.getAllComment();
+    public List<CommentResponseDto> getAllComment(@RequestParam(defaultValue = "0") int page ,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        return commentService.getAllComment(page,size);
     }
 
     @GetMapping("/{id}")

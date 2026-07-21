@@ -10,7 +10,7 @@ public interface IUserService {
 
     UserResponseDto findUserById(Long id);
 
-    List<UserResponseDto> findAllUser();
+    List<UserResponseDto> findAllUser(int page, int size);
 
     UserResponseDto updateUser(Long id , UserRequestDto userRequestDto);
 

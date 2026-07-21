@@ -12,7 +12,7 @@ public interface IBlogPostController {
 
     public BlogPostResponseDto getBlogPostById(Long id);
 
-    public List<BlogPostResponseDto> getAllBlogPost();
+    public List<BlogPostResponseDto> getAllBlogPost(int page,int size);
 
     public void  deleteBlogPostByID(Long id);
 

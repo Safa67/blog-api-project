@@ -31,8 +31,9 @@ public class BlogPostControllerImpl implements IBlogPostController {
 
     @GetMapping
     @Override
-    public List<BlogPostResponseDto> getAllBlogPost() {
-        return blogPostService.getAllBlogPost();
+    public List<BlogPostResponseDto> getAllBlogPost(@RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        return blogPostService.getAllBlogPost(page,size);
     }
 
     @DeleteMapping("/{id}")
