@@ -20,4 +20,7 @@ public class CommentRequestDto {
 
     @NotNull
     private Long blogId;
+
+    @NotNull
+    private Long authorId;
 }
