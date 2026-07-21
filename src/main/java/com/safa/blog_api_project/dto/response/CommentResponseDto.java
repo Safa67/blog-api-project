@@ -12,4 +12,6 @@ public class CommentResponseDto {
     private String commenterName;
 
     private String content;
+
+    private String authorUsername;
 }

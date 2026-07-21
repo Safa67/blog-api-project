@@ -20,4 +20,7 @@ public class BlogPostRequestDto {
     private Long categoryId;
 
     private List<Long> tagIds;
+
+    @NotNull
+    private Long authorId;
 }

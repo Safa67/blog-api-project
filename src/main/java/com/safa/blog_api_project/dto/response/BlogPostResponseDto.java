@@ -18,4 +18,6 @@ public class BlogPostResponseDto {
     private String categoryName;
 
     private List<TagResponseDto> tags;
+
+    private String authorUsername;
 }

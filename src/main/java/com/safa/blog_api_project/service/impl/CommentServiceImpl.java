@@ -4,10 +4,12 @@ import com.safa.blog_api_project.dto.request.CommentRequestDto;
 import com.safa.blog_api_project.dto.response.CommentResponseDto;
 import com.safa.blog_api_project.entity.BlogPost;
 import com.safa.blog_api_project.entity.Comment;
+import com.safa.blog_api_project.entity.User;
 import com.safa.blog_api_project.exception.ResourceNotFoundException;
 import com.safa.blog_api_project.mapper.CommentMapper;
 import com.safa.blog_api_project.repository.BlogPostRepository;
 import com.safa.blog_api_project.repository.CommentRepository;
+import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.ICommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,19 @@ public class CommentServiceImpl implements ICommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final BlogPostRepository blogPostRepository;
+    private final UserRepository userRepository;
 
     @Override
     public CommentResponseDto createComment(CommentRequestDto commentRequestDto) {
         Comment comment = commentMapper.toCommentEntity(commentRequestDto);
+
+        User author = userRepository.findById(commentRequestDto.getAuthorId())
+                .orElseThrow(()->new ResourceNotFoundException("Kullanıcı bulunamadı"));
+
         BlogPost blogPost = blogPostRepository.findById(commentRequestDto.getBlogId())
                 .orElseThrow(()->new ResourceNotFoundException("Post bulunamadi"));
 
+        comment.setAuthor(author);
         comment.setBlogPost(blogPost);
         Comment dbComment = commentRepository.save(comment);
         return commentMapper.toCommentResponse(dbComment);

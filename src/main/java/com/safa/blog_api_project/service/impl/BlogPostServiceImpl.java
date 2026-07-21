@@ -5,11 +5,13 @@ import com.safa.blog_api_project.dto.response.BlogPostResponseDto;
 import com.safa.blog_api_project.entity.BlogPost;
 import com.safa.blog_api_project.entity.Category;
 import com.safa.blog_api_project.entity.Tag;
+import com.safa.blog_api_project.entity.User;
 import com.safa.blog_api_project.exception.ResourceNotFoundException;
 import com.safa.blog_api_project.mapper.BlogPostMapper;
 import com.safa.blog_api_project.repository.BlogPostRepository;
 import com.safa.blog_api_project.repository.CategoryRepository;
 import com.safa.blog_api_project.repository.TagRepository;
+import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.IBlogPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,14 +27,22 @@ public class BlogPostServiceImpl implements IBlogPostService {
     private final BlogPostMapper blogPostMapper;
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
     @Override
     public BlogPostResponseDto createBlogPost(BlogPostRequestDto blogPostRequestDto) {
+
         Long id = blogPostRequestDto.getCategoryId();
+
+        User author = userRepository.findById(blogPostRequestDto.getAuthorId())
+                .orElseThrow(()->new ResourceNotFoundException("Kullanıcı bulunamadı"));
+
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("kategori bulunamadi"));
+
         BlogPost blogPost = blogPostMapper.toBlogEntity(blogPostRequestDto);
         blogPost.setCategory(category);
+        blogPost.setAuthor(author);
 
         if(blogPostRequestDto.getTagIds() != null && !blogPostRequestDto.getTagIds().isEmpty()){
             List<Tag> tags =tagRepository.findAllById(blogPostRequestDto.getTagIds());

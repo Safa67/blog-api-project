@@ -14,6 +14,7 @@ public interface CommentMapper {
     @Mapping(target = "blogPost",ignore = true)
     Comment toCommentEntity (CommentRequestDto commentRequest);
 
+    @Mapping(source = "author.username", target = "authorUsername")
     CommentResponseDto toCommentResponse ( Comment comment);
 
     List<CommentResponseDto> toCommentResponseList (List<Comment> comments);

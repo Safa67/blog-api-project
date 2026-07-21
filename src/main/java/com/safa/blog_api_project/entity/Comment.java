@@ -22,4 +22,8 @@ public class Comment extends Auditable{
     @ManyToOne
     @JoinColumn(name = "blog_id", nullable = false)
     private BlogPost blogPost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User author;
 }

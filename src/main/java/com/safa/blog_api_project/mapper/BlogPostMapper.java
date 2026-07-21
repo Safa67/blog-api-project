@@ -14,6 +14,7 @@ public interface BlogPostMapper {
     @Mapping(target = "category",ignore = true)
     BlogPost toBlogEntity(BlogPostRequestDto requestDto);
 
+    @Mapping(source = "author.username", target = "authorUsername")
     @Mapping(source = "category.name",target = "categoryName")
     BlogPostResponseDto toBlogResponse(BlogPost blogPost);
 
