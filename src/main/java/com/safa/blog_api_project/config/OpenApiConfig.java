@@ -14,7 +14,7 @@ public class OpenApiConfig {
                 .info(new Info()
                 .title("Blog API Projesi")
                         .version("1.0.0")
-                        .description("Bu API; blog yazıları, kategoriler, etiketler ve yorumlar için geliştirilmiş temel CRUD operasyonlarını içerir.")
+                        .description("Bu API; blog yazıları, kategoriler, etiketler, kullanıcılar ve yorumlar için geliştirilmiş temel CRUD operasyonlarını içerir.")
         );
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class BlogPostRequestDto {
+
     @NotBlank
     private String title;
 
