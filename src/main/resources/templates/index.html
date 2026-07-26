@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Project</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <h1>Blog</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="nav-home">Anasayfa</a></li>
+                <li><a href="#" id="nav-categories">Kategoriler</a></li>
+                <li><a href="#" id="nav-create-post">Yeni Post Yaz</a></li>
+                <li><a href="#" id="nav-comments">Yorumları Yönet</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="content-area">
+            <h2>En Son Postlar</h2>
+            <div id="data-container">
+                <!-- Postlar buraya gelecek -->
+            </div>
+        </section>
+
+        <aside>
+            <div class="sidebar-widget" style="margin-bottom: 20px;">
+                <h3>Ara</h3>
+                <input type="text" id="search-input" placeholder="Post ara" style="width: 100%; padding: 5px; margin-bottom: 5px; box-sizing: border-box;">
+                <button style="width: 100%; padding: 5px; background: #3498db; color: white; border: none; cursor: pointer; border-radius: 3px;">Search</button>
+            </div>
+            <div class="sidebar-widget">
+                <h3>Etiketler</h3>
+                <ul id="tags-list">
+                    <!-- Etiketler buraya gelecek -->
+                </ul>
+            </div>
+        </aside>
+    </main>
+
+</body>
+</html>
