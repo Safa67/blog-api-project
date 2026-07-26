@@ -106,4 +106,25 @@ public class BlogPostServiceImpl implements IBlogPostService {
        return blogPostMapper.toBlogResponse(dbblogPost);
 
     }
+
+    @Override
+    public List<BlogPostResponseDto> getBlogsByCategoryName(String categoryName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogPost> blogsPage = blogPostRepository.findByCategory_Name(categoryName, pageable);
+        return blogPostMapper.toResponseList(blogsPage.getContent());
+    }
+    @Override
+    public List<BlogPostResponseDto> getBlogsByTagName(String tagName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogPost> blogsPage = blogPostRepository.findByTags_Name(tagName, pageable);
+        return blogPostMapper.toResponseList(blogsPage.getContent());
+    }
+
+    @Override
+    public List<BlogPostResponseDto> searchBlogs(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<BlogPost> blogsPage = blogPostRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+        return blogPostMapper.toResponseList(blogsPage.getContent());
+    }
 }

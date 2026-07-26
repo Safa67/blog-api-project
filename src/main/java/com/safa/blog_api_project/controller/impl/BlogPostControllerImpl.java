@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("/api/blogs")
 public class BlogPostControllerImpl implements IBlogPostController {
 
@@ -47,4 +48,28 @@ public class BlogPostControllerImpl implements IBlogPostController {
     public BlogPostResponseDto updateBlogPost(@PathVariable Long id,@Valid @RequestBody BlogPostRequestDto blogPostRequestDto) {
         return blogPostService.updateBlogPost(id,blogPostRequestDto);
     }
+
+    @GetMapping("/category/{categoryName}")
+    public List<BlogPostResponseDto> getBlogsByCategoryName(
+            @PathVariable String categoryName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return blogPostService.getBlogsByCategoryName(categoryName, page, size);
+    }
+    @GetMapping("/tag/{tagName}")
+    public List<BlogPostResponseDto> getBlogsByTagName(
+            @PathVariable String tagName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return blogPostService.getBlogsByTagName(tagName, page, size);
+    }
+
+    @GetMapping("/search")
+    public List<BlogPostResponseDto> searchBlogs(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return blogPostService.searchBlogs(keyword, page, size);
+    }
+
 }

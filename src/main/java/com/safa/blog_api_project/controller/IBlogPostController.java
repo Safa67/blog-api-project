@@ -18,4 +18,9 @@ public interface IBlogPostController {
 
     public BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto);
 
+    List<BlogPostResponseDto> getBlogsByCategoryName(String categoryName, int page, int size);
+
+    List<BlogPostResponseDto> getBlogsByTagName(String tagName, int page, int size);
+
+    List<BlogPostResponseDto> searchBlogs(String keyword, int page, int size);
 }

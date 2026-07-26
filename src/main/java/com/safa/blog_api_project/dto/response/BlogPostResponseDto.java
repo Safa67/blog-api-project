@@ -20,4 +20,6 @@ public class BlogPostResponseDto {
     private List<TagResponseDto> tags;
 
     private String authorUsername;
+
+    private List<CommentResponseDto> comments;
 }

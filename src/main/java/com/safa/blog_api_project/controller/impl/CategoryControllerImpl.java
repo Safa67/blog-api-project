@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Valid
+@CrossOrigin
 @RequestMapping("/api/categories")
 public class CategoryControllerImpl implements ICategoryController {
 

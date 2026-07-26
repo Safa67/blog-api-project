@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {TagMapper.class})
+@Mapper(componentModel = "spring", uses = {TagMapper.class, CommentMapper.class})
 public interface BlogPostMapper {
 
     @Mapping(target = "category",ignore = true)

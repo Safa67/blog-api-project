@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tag")
 @RequiredArgsConstructor
+@CrossOrigin
 public class TagController implements ITagController {
 
     private final ITagService tagService;
