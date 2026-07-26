@@ -6,13 +6,19 @@ import com.safa.blog_api_project.dto.response.BlogPostResponseDto;
 import java.util.List;
 
 public interface IBlogPostService {
-    public BlogPostResponseDto createBlogPost(BlogPostRequestDto blogPostRequestDto) ;
+    BlogPostResponseDto createBlogPost(BlogPostRequestDto blogPostRequestDto) ;
 
-    public BlogPostResponseDto getBlogPostById(Long id);
+    BlogPostResponseDto getBlogPostById(Long id);
 
-    public List<BlogPostResponseDto> getAllBlogPost(int page, int size);
+    List<BlogPostResponseDto> getAllBlogPost(int page, int size);
 
-    public void  deleteBlogPostByID(Long id);
+    void  deleteBlogPostByID(Long id);
 
-    public BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto);
+    BlogPostResponseDto updateBlogPost(Long id, BlogPostRequestDto blogPostRequestDto);
+
+    List<BlogPostResponseDto> getBlogsByCategoryName(String categoryName, int page, int size);
+
+    List<BlogPostResponseDto> getBlogsByTagName(String tagName, int page, int size);
+
+    List<BlogPostResponseDto> searchBlogs(String keyword, int page, int size);
 }

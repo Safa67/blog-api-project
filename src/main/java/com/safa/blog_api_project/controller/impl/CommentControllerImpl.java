@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/comment")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CommentControllerImpl implements ICommentController {
 
     private final ICommentService commentService;

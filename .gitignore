@@ -35,5 +35,4 @@ build/
 # Docker ve Loglar
 *.log
 blog_db_data/
-
-
+ui/

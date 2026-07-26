@@ -1,5 +1,6 @@
 package com.safa.blog_api_project.dto.response;
 
+import com.safa.blog_api_project.entity.BlogPost;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,6 @@ public class CommentResponseDto {
     private String content;
 
     private String authorUsername;
+
+    private BlogPost post;
 }
