@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategoriler</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+    <h1>Blog</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Anasayfaya Dön</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main style="max-width: 800px; margin: 0 auto; display: block;">
+    <section id="content-area" style="background: white; padding: 30px; border: 1px solid lightgrey; margin-top: 20px;">
+        <h2 style="margin-bottom: 20px; color: black; border-bottom: 2px solid red; padding-bottom: 10px;">Tüm Kategoriler</h2>
+
+        <div th:if="${categories.empty}">
+            <p style="color: grey; font-style: italic;">Sistemde henüz bir kategori bulunmuyor.</p>
+        </div>
+
+        <ul style="list-style-type: none; padding: 0;">
+            <li th:each="cat : ${categories}" style="background: whitesmoke; padding: 15px; margin-bottom: 10px; border-left: 4px solid blue; font-size: 18px; display: flex; justify-content: space-between; align-items: center;">
+                <span th:text="${cat.name}" style="font-weight: bold; color: navy;">Kategori Adı</span>
+                <!-- İstesen ileride bu linki o kategoriye ait blogları listeleyen bir sayfaya yönlendirebilirsin -->
+                <a th:href="@{/home(categoryName=${cat.name})}" style="background: navy; color: white; padding: 5px 10px; text-decoration: none; font-size: 14px; border-radius: 3px;">Filtrele</a>
+            </li>
+        </ul>
+
+    </section>
+</main>
+</body>
+</html>
