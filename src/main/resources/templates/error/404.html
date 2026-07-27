@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayfa Bulunamadı - 404</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: whitesmoke; margin: 0; font-family: Arial, sans-serif;">
+    <div style="text-align: center; background: white; padding: 50px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h1 style="font-size: 80px; margin: 0; color: red;">404</h1>
+        <h2 style="color: navy;">Eyvah! Aradığınız sayfa bulunamadı.</h2>
+        <p style="color: grey; margin-bottom: 30px;">Görünüşe göre kayboldunuz veya tıkladığınız link kırık.</p>
+        <a th:href="@{/home}" style="padding: 10px 20px; background: blue; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">Anasayfaya Dön</a>
+    </div>
+</body>
+</html>

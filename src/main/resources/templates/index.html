@@ -40,6 +40,19 @@
             </div>
 
             </div>
+
+            <!-- Sayfalama (Pagination) Butonları -->
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <a th:if="${currentPage > 0}" 
+                   th:href="@{/home(page=${currentPage - 1}, keyword=${param.keyword}, tagName=${param.tagName}, categoryName=${param.categoryName})}" 
+                   style="padding: 10px 15px; background: navy; color: white; text-decoration: none; border-radius: 4px;">Önceki Sayfa</a>
+                
+                <span th:unless="${currentPage > 0}"></span>
+
+                <a th:if="${hasNext}" 
+                   th:href="@{/home(page=${currentPage + 1}, keyword=${param.keyword}, tagName=${param.tagName}, categoryName=${param.categoryName})}" 
+                   style="padding: 10px 15px; background: navy; color: white; text-decoration: none; border-radius: 4px;">Sonraki Sayfa</a>
+            </div>
         </section>
 
         <aside>

@@ -35,24 +35,29 @@ public class WebPageController {
     public String getHomePage(@RequestParam(required = false) String tagName,
                               @RequestParam(required = false) String keyword,
                               @RequestParam(required = false) String categoryName,
+                              @RequestParam(defaultValue = "0") int page,
                               Model model) {
 
         List<BlogPostResponseDto> fetchedBlogs;
+        int size = 10;
 
         if (keyword != null && !keyword.isEmpty()) {
-            fetchedBlogs = blogPostService.searchBlogs(keyword, 0, 10);
+            fetchedBlogs = blogPostService.searchBlogs(keyword, page, size);
         }
         else if (tagName != null && !tagName.isEmpty()) {
-            fetchedBlogs = blogPostService.getBlogsByTagName(tagName, 0, 10);
+            fetchedBlogs = blogPostService.getBlogsByTagName(tagName, page, size);
         }
         else if (categoryName != null && !categoryName.isEmpty()) {
-            fetchedBlogs = blogPostService.getBlogsByCategoryName(categoryName, 0, 10);
+            fetchedBlogs = blogPostService.getBlogsByCategoryName(categoryName, page, size);
         }
         else {
-            fetchedBlogs = blogPostService.getAllBlogPost(0, 10);
+            fetchedBlogs = blogPostService.getAllBlogPost(page, size);
         }
 
         model.addAttribute("blogs", fetchedBlogs);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("hasNext", fetchedBlogs.size() == size);
+        
         List<TagResponseDto> fetchedTags = tagService.getAllTag();
         model.addAttribute("tags", fetchedTags);
 
