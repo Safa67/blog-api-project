@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Post Yaz</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+    <h1>Blog</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Anasayfaya Dön</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main style="max-width: 800px; margin: 0 auto; display: block;">
+    <section id="content-area" style="background: white; padding: 30px; border: 1px solid lightgrey; margin-top: 20px;">
+        <h2 style="margin-bottom: 20px; color: black;">Yeni Blog Postu Oluştur</h2>
+
+        <div style="background: whitesmoke; padding: 15px; margin-bottom: 20px; border: 1px solid lightgrey;">
+            <h3 style="margin-top: 0; margin-bottom: 10px; color: black; font-size: 16px;">Hızlı Etiket Üret</h3>
+            <form th:action="@{/create-tag}" method="POST" style="display: flex; gap: 10px;">
+                <input type="text" name="name" placeholder="Yeni etiket adı (Örn: Teknoloji)" style="flex: 1; padding: 8px; box-sizing: border-box;" required>
+                <button type="submit" style="padding: 8px 15px; background: red; color: white; border: none; cursor: pointer; font-weight: bold;">Ekle</button>
+            </form>
+        </div>
+
+        <form th:action="@{/create-post}" method="POST">
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Yazar</label>
+                <select name="authorId" style="width: 100%; padding: 10px; box-sizing: border-box;" required>
+                    <option value="">-- Yazar Seçiniz --</option>
+                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Başlık</label>
+                <input type="text" name="title" style="width: 100%; padding: 10px; box-sizing: border-box;" required>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Kategori</label>
+                <select name="categoryId" style="width: 100%; padding: 10px; box-sizing: border-box;" required>
+                    <option value="">-- Kategori Seçiniz --</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Etiketler (Çoklu Seçim İçin CTRL/CMD Kullanın)</label>
+                <select name="tagIds" multiple style="width: 100%; padding: 10px; box-sizing: border-box; height: 100px;">
+                    <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">İçerik</label>
+                <textarea name="content" rows="10" style="width: 100%; padding: 10px; box-sizing: border-box;" required></textarea>
+            </div>
+
+            <button type="submit" style="padding: 12px 25px; background: blue; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold;">Gönder</button>
+        </form>
+
+    </section>
+</main>
+</body>
+</html>

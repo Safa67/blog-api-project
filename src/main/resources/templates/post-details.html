@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${blog.title}">Blog Detay</title>
+
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+  <h1>Blog Detayı</h1>
+  <nav>
+    <ul>
+
+      <li><a th:href="@{/home}">Anasayfaya Dön</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main style="max-width: 800px; margin: 0 auto; display: block;">
+  <section id="content-area" style="background: #fff; padding: 30px; border: 1px solid #ddd; margin-top: 20px;">
+
+    <!-- Blog Başlığı -->
+    <h1 th:text="${blog.title}" style="color: navy; margin-bottom: 10px;">Başlık</h1>
+
+    <div class="item-meta" style="margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+      Kategori: <span th:text="${blog.categoryName}" style="color:red; font-weight:bold;">Genel</span> |
+      Yazar: <span th:text="${blog.authorUsername}">Yazar</span>
+    </div>
+
+
+    <p th:text="${blog.content}" style="font-size: 1.1em; line-height: 1.8;">İçerik</p>
+
+    <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+
+    <h2 style="margin-bottom: 20px;">Yorumlar</h2>
+
+
+    <div th:if="${blog.comments.empty}">
+      <p style="color: grey; font-style: italic;">Henüz yorum yapılmamış. İlk yorumu sen yap!</p>
+    </div>
+
+
+    <div th:each="comment : ${blog.comments}" style="background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-left: 4px solid red;">
+      <strong th:text="${comment.commenterName}">Yorumcu Adı</strong>
+      <p th:text="${comment.content}" style="margin-top: 5px; color: grey;">Yorum içeriği...</p>
+    </div>
+
+    <div style="margin-top: 40px; background: #fff; padding: 20px; border: 1px dashed #ccc;">
+      <h3>Yorum Ekle</h3>
+      <form th:action="@{/blog/{id}/comment(id=${blog.id})}" method="POST">
+
+        <select name="authorId" style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
+          <option value="">-- Yorumu Yapan Kullanıcıyı Seç --</option>
+          <option th:each="kullanici : ${users}"
+                  th:value="${kullanici.id}"
+                  th:text="${kullanici.username}">
+          </option>
+        </select>
+
+        <textarea name="content" placeholder="Yorumunuz" rows="4" ...></textarea>
+        <button type="submit" ...>Gönder</button>
+      </form>
+    </div>
+  </section>
+</main>
+</body>
+</html>

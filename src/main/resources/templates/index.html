@@ -11,10 +11,9 @@
         <h1>Blog</h1>
         <nav>
             <ul>
-                <li><a href="#" id="nav-home">Anasayfa</a></li>
-                <li><a href="#" id="nav-categories">Kategoriler</a></li>
-                <li><a href="#" id="nav-create-post">Yeni Post Yaz</a></li>
-                <li><a href="#" id="nav-comments">Yorumları Yönet</a></li>
+                <li><a href="http://localhost:8080/home" id="nav-home">Anasayfa</a></li>
+                <li><a th:href="@{/categories}" id="nav-categories">Kategoriler</a></li>
+                <li><a th:href="@{/create-post}" id="nav-create-post">Yeni Post Yaz</a></li>
             </ul>
         </nav>
     </header>
@@ -22,21 +21,46 @@
     <main>
         <section id="content-area">
             <h2>En Son Postlar</h2>
+
             <div id="data-container">
-                <!-- Postlar buraya gelecek -->
+                <div th:each="blog: ${blogs}" class="data-item">
+
+                    <h3>
+                        <a th:href="@{/blog/{id}(id=${blog.id})}" th:text="${blog.title}" style="text-decoration: none; color: navy;"></a>
+                    </h3>
+
+                <p th:text="${#strings.abbreviate(blog.content,150)}">icerik</p>
+
+                <div class="item.meta">
+                    Kategori: <span th:text="${blog.categoryName}"></span>
+                </div>
+                
+                <hr style="border: 0; border-top: 1px solid lightgrey; margin: 20px 0;">
+
+            </div>
+
             </div>
         </section>
 
         <aside>
             <div class="sidebar-widget" style="margin-bottom: 20px;">
+
                 <h3>Ara</h3>
-                <input type="text" id="search-input" placeholder="Post ara" style="width: 100%; padding: 5px; margin-bottom: 5px; box-sizing: border-box;">
-                <button style="width: 100%; padding: 5px; background: #3498db; color: white; border: none; cursor: pointer; border-radius: 3px;">Search</button>
+
+                <form th:action="@{/home}" method="GET">
+                    <input type="text" name="keyword" id="search-input" placeholder="Post ara" style="width: 100%; padding: 5px; margin-bottom: 5px; box-sizing: border-box;">
+                    <button type="submit" style="width: 100%; padding: 5px; background: blue; color: white; border: none; cursor: pointer; border-radius: 3px;">Search</button>
+                </form>
+
             </div>
+
             <div class="sidebar-widget">
                 <h3>Etiketler</h3>
                 <ul id="tags-list">
-                    <!-- Etiketler buraya gelecek -->
+                    <li th:each="tag : ${tags}">
+                        <a th:href="@{/home(tagName=${tag.name})}" th:text="${tag.name}"
+                        style="text-decoration: none; color: inherit"></a>
+                    </li>
                 </ul>
             </div>
         </aside>
