@@ -33,7 +33,7 @@ public class BlogPost extends Auditable{
     )
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "blogPost")
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)

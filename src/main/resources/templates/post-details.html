@@ -45,20 +45,18 @@
     <div th:each="comment : ${blog.comments}" style="background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-left: 4px solid red;">
       <strong th:text="${comment.commenterName}">Yorumcu Adı</strong>
       <p th:text="${comment.content}" style="margin-top: 5px; color: grey;">Yorum içeriği...</p>
+
+      <form th:action="@{/comment/{id}/delete(id=${comment.id}, blogId=${blog.id})}" method="post"
+            th:if="${#authorization.expression('isAuthenticated()') and #authentication.name == comment.commenterName}"
+            style="display: inline; margin-left: 10px;">
+        <button type="submit" style="background: darkred; color: white; border: none; padding: 2px 5px; cursor: pointer; border-radius: 3px; font-size: 11px;">Yorumu Sil</button>
+      </form>
+
     </div>
 
     <div style="margin-top: 40px; background: #fff; padding: 20px; border: 1px dashed #ccc;">
       <h3>Yorum Ekle</h3>
       <form th:action="@{/blog/{id}/comment(id=${blog.id})}" method="POST">
-
-        <select name="authorId" style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;">
-          <option value="">-- Yorumu Yapan Kullanıcıyı Seç --</option>
-          <option th:each="kullanici : ${users}"
-                  th:value="${kullanici.id}"
-                  th:text="${kullanici.username}">
-          </option>
-        </select>
-
         <textarea name="content" placeholder="Yorumunuz" rows="4" ...></textarea>
         <button type="submit" ...>Gönder</button>
       </form>

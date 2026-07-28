@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog - Kayıt Ol</title>
+
+  <style>
+    body { font-family: Tahoma, sans-serif; background-color: whitesmoke; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .container { background: white; padding: 30px; border: 1px solid lightgray; border-radius: 8px; box-shadow: 2px 2px 5px gray; width: 100%; max-width: 400px; }
+    h2 { text-align: center; color: black; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; color: dimgray; font-weight: bold; }
+    input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid lightgray; border-radius: 4px; box-sizing: border-box; }
+    button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+    button:hover { background-color: darkblue; }
+    .login-link { text-align: center; margin-top: 15px; font-size: 14px;}
+    .login-link a { color: blue; text-decoration: none; font-weight: bold;}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Aramıza Katıl</h2>
+  <div th:if="${error}" th:text="${error}" style="color: red; font-size: 14px; text-align: center; font-weight: bold; margin-bottom: 15px;"></div>
+  <form th:action="@{/register}" th:object="${user}" method="post">
+
+    <div class="form-group">
+      <label for="username">Kullanıcı Adı</label>
+      <input type="text" id="username" name="username" placeholder="Örn: safa" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-posta</label>
+      <input type="email" id="email" name="email" placeholder="Örn: safa@mail.com" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Şifre</label>
+      <input type="password" id="password" name="password" placeholder="Şifrenizi girin" required>
+    </div>
+    <button type="submit">Kayıt Ol</button>
+  </form>
+  <div class="login-link">
+    Zaten hesabın var mı? <a th:href="@{/login}">Giriş Yap</a>
+  </div>
+</div>
+</body>
+</html>

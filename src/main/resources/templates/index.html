@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +11,36 @@
     <header>
         <h1>Blog</h1>
         <nav>
-            <ul>
-                <li><a href="http://localhost:8080/home" id="nav-home">Anasayfa</a></li>
-                <li><a th:href="@{/categories}" id="nav-categories">Kategoriler</a></li>
-                <li><a th:href="@{/create-post}" id="nav-create-post">Yeni Post Yaz</a></li>
+            <ul style="display: flex; justify-content: space-between; align-items: center; list-style-type: none; padding: 0;">
+
+                <div style="display: flex; gap: 15px;">
+                    <li><a th:href="@{/home}">Anasayfa</a></li>
+                    <li><a th:href="@{/categories}">Kategoriler</a></li>
+                    <li><a th:href="@{/create-post}">Yeni Post Yaz</a></li>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+
+                    <li sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}" style="color: green; font-weight: bold;">Giriş Yap</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()">
+                        <a th:href="@{/register}" style="color: blue; font-weight: bold;">Kayıt Ol</a>
+                    </li>
+
+                    <li sec:authorize="isAuthenticated()">
+                        <span style="color: dimgray;">Hoşgeldin, <b sec:authentication="name"></b>!</span>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" style="margin: 0; padding: 0;">
+                            <button type="submit" style="background: none; border: none; color: red; font-weight: bold; cursor: pointer; font-size: 16px; padding: 0;">Çıkış Yap</button>
+                        </form>
+                    </li>
+
+                </div>
             </ul>
         </nav>
+
     </header>
 
     <main>
@@ -34,14 +59,17 @@
                 <div class="item.meta">
                     Kategori: <span th:text="${blog.categoryName}"></span>
                 </div>
-                
-                <hr style="border: 0; border-top: 1px solid lightgrey; margin: 20px 0;">
+                    <form th:action="@{/blog/{id}/delete(id=${blog.id})}" method="post" 
+                          th:if="${#authorization.expression('isAuthenticated()') and #authentication.name == blog.authorUsername}"
+                          style="display: inline;">
+                        <button type="submit" style="background: red; color: white; border: none; padding: 3px 8px; cursor: pointer; border-radius: 3px; font-size: 12px;">Postu Sil</button>
+                    </form>
 
+                    <hr style="border: 0; border-top: 1px solid lightgrey; margin: 20px 0;">
             </div>
 
             </div>
 
-            <!-- Sayfalama (Pagination) Butonları -->
             <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                 <a th:if="${currentPage > 0}" 
                    th:href="@{/home(page=${currentPage - 1}, keyword=${param.keyword}, tagName=${param.tagName}, categoryName=${param.categoryName})}" 
