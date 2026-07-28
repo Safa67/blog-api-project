@@ -3,19 +3,26 @@ package com.safa.blog_api_project.controller.web;
 import com.safa.blog_api_project.dto.request.BlogPostRequestDto;
 import com.safa.blog_api_project.dto.request.CommentRequestDto;
 import com.safa.blog_api_project.dto.request.TagRequestDto;
+import com.safa.blog_api_project.dto.request.UserRequestDto;
 import com.safa.blog_api_project.dto.response.BlogPostResponseDto;
+import com.safa.blog_api_project.dto.response.CommentResponseDto;
 import com.safa.blog_api_project.dto.response.TagResponseDto;
 import com.safa.blog_api_project.dto.response.UserResponseDto;
+import com.safa.blog_api_project.entity.User;
+import com.safa.blog_api_project.exception.ResourceNotFoundException;
+import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.IBlogPostService;
 import com.safa.blog_api_project.service.ICategoryService;
 import com.safa.blog_api_project.service.ICommentService;
 import com.safa.blog_api_project.service.ITagService;
 import com.safa.blog_api_project.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,6 +34,7 @@ public class WebPageController {
     final private ICommentService commentService;
     final private IUserService userService;
     final private ICategoryService categoryService;
+    final private UserRepository userRepository;
 
 
 
@@ -74,12 +82,14 @@ public class WebPageController {
     }
 
     @PostMapping("/blog/{id}/comment")
-    public String addComment(@PathVariable Long id, @ModelAttribute CommentRequestDto commentRequestDto) {
-        commentRequestDto.setBlogId(id);
+    public String addComment(@PathVariable Long id, @ModelAttribute CommentRequestDto commentRequestDto, java.security.Principal principal) {
+        com.safa.blog_api_project.entity.User user = userRepository.findByUsername(principal.getName()).orElseThrow();
 
-        UserResponseDto author = userService.findUserById(commentRequestDto.getAuthorId());
-        commentRequestDto.setCommenterName(author.getUsername());
-        
+
+        commentRequestDto.setBlogId(id);
+        commentRequestDto.setAuthorId(user.getId());
+        commentRequestDto.setCommenterName(user.getUsername());
+
         commentService.createComment(commentRequestDto);
         return "redirect:/blog/" + id;
     }
@@ -94,7 +104,11 @@ public class WebPageController {
     }
 
     @PostMapping("/create-post")
-    public String createPost(@ModelAttribute BlogPostRequestDto blogPostRequestDto) {
+    public String creatPost(@ModelAttribute BlogPostRequestDto blogPostRequestDto, Principal principal){
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow();
+
+        blogPostRequestDto.setAuthorId(user.getId());
+
         blogPostService.createBlogPost(blogPostRequestDto);
         return "redirect:/home";
     }
@@ -109,6 +123,50 @@ public class WebPageController {
     public String getCategoriesPage(Model model) {
         model.addAttribute("categories", categoryService.getCategoryAll());
         return "categories";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new UserRequestDto());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute UserRequestDto userRequestDto, Model model) {
+        try {
+            userService.createUser(userRequestDto);
+            return "redirect:/login";
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("error", "Bu kullanıcı adı veya e-posta zaten kullanılıyor!");
+            return "register";
+        }
+    }
+
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
+
+    @PostMapping("/blog/{id}/delete")
+    public String deletePost(@PathVariable Long id, Principal principal) {
+        BlogPostResponseDto blog = blogPostService.getBlogPostById(id);
+
+        if (blog.getAuthorUsername().equals(principal.getName())) {
+            blogPostService.deleteBlogPostByID(id);
+        }
+
+        return "redirect:/home";
+    }
+
+    @PostMapping("/comment/{id}/delete")
+    public String deleteComment(@PathVariable Long id, @RequestParam Long blogId, Principal principal) {
+        CommentResponseDto comment = commentService.getCommentById(id);
+        if (comment.getCommenterName().equals(principal.getName())) {
+            commentService.deleteCommentById(id);
+        }
+
+        return "redirect:/blog/" + blogId;
     }
 
 }

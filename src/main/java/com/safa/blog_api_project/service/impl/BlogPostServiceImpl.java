@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class BlogPostServiceImpl implements IBlogPostService {
 
     @Override
     public List<BlogPostResponseDto> getAllBlogPost(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate"));
         Page<BlogPost> blogPostsPage = blogPostRepository.findAll(pageable);
         return blogPostMapper.toResponseList(blogPostsPage.getContent());
     }

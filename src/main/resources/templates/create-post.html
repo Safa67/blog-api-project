@@ -29,14 +29,6 @@
         </div>
 
         <form th:action="@{/create-post}" method="POST">
-            
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Yazar</label>
-                <select name="authorId" style="width: 100%; padding: 10px; box-sizing: border-box;" required>
-                    <option value="">-- Yazar Seçiniz --</option>
-                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
-                </select>
-            </div>
 
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-weight: bold; margin-bottom: 5px;">Başlık</label>

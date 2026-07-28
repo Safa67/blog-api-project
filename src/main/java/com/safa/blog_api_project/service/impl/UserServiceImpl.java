@@ -9,6 +9,7 @@ import com.safa.blog_api_project.repository.UserRepository;
 import com.safa.blog_api_project.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +22,12 @@ public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
         User user = userMapper.toEntityUser(userRequestDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User dbUser = userRepository.save(user);
         UserResponseDto userResponse=userMapper.toUserResponse(dbUser);
         return userResponse;
